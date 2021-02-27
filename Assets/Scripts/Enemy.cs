@@ -15,6 +15,11 @@ public class Enemy : MonoBehaviour
 
     int redHueVal = 0;
 
+    GameObject redHPbar;
+    GameObject yellowHPbar;
+    GameObject blueHPbar;
+
+
     void Start()
     {
         maxTotalHP = yellowHP + redHP + blueHP;
@@ -30,7 +35,25 @@ public class Enemy : MonoBehaviour
             redHueVal = 360;
         }
 
+        //set starting enemy colour
         ChangeColour();
+
+        //get enemy HP bar lights and set to off if no HP in that colour
+        redHPbar = transform.GetChild(0).gameObject;
+        if (currRHP <= 0) {
+            SetHPBarOff(redHPbar);
+        }
+        yellowHPbar = transform.GetChild(1).gameObject;
+        if (currYHP <= 0)
+        {
+            SetHPBarOff(yellowHPbar);
+        }
+        blueHPbar = transform.GetChild(2).gameObject;
+        print(blueHPbar.name);
+        if (currBHP <= 0)
+        {
+            SetHPBarOff(blueHPbar);
+        }
     }
 
     void Update()
@@ -47,6 +70,9 @@ public class Enemy : MonoBehaviour
                 {
                     currRHP--;
                     ChangeColour();
+                    if (currRHP <= 0) {
+                        SetHPBarOff(redHPbar);
+                    }
                     CheckIfDead();
                 }
                 break;
@@ -55,6 +81,10 @@ public class Enemy : MonoBehaviour
                 {
                     currYHP--;
                     ChangeColour();
+                    if (currYHP <= 0)
+                    {
+                        SetHPBarOff(yellowHPbar);
+                    }
                     CheckIfDead();
                 }
                 break;
@@ -63,6 +93,10 @@ public class Enemy : MonoBehaviour
                 {
                     currBHP--;
                     ChangeColour();
+                    if (currBHP <= 0)
+                    {
+                        SetHPBarOff(blueHPbar);
+                    }
                     CheckIfDead();
                 }
                 break;
@@ -89,7 +123,6 @@ public class Enemy : MonoBehaviour
         //change sat and val based on HP %
         sat = (float)currTotalHP / (float)maxTotalHP;
         val = 0.5f + ((float)currTotalHP / (float)maxTotalHP) / 2;
-        print("hue: " + hue + " sat: " + sat + " val: " + val);
         Color newColour = Color.HSVToRGB(hue, sat, val);
         GetComponent<Renderer>().material.color = newColour;
 
@@ -115,7 +148,29 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Die()
     {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
         yield return new WaitForSeconds(2f);
         Destroy(gameObject);
+    }
+
+    void SetHPBarOff(GameObject hpBar)
+    {
+        Color hpCol = hpBar.GetComponent<Renderer>().material.color;
+
+        float hue;
+        float sat;
+        float val;
+
+        //turn saturation and value down to half each to give effect of turned off light
+        Color.RGBToHSV(hpCol, out hue, out sat, out val);
+        hpCol = Color.HSVToRGB(hue, 0.1f, val);
+        hpCol.a = 0.1f;
+        hpBar.GetComponent<Renderer>().material.color = hpCol;
+
+        //stop emission by turning emission colour to black
+        hpBar.GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.black);
     }
 }
