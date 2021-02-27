@@ -47,7 +47,7 @@ public class Enemy : MonoBehaviour
                 {
                     currRHP--;
                     ChangeColour();
-                    //TODO subtract red from enemy colour
+                    CheckIfDead();
                 }
                 break;
             case Colours.Yellow:
@@ -55,8 +55,7 @@ public class Enemy : MonoBehaviour
                 {
                     currYHP--;
                     ChangeColour();
-
-                    //TODO subtract yellow from enemy colour
+                    CheckIfDead();
                 }
                 break;
             case Colours.Blue:
@@ -64,8 +63,7 @@ public class Enemy : MonoBehaviour
                 {
                     currBHP--;
                     ChangeColour();
-
-                    //TODO subtract blue from enemy colour
+                    CheckIfDead();
                 }
                 break;
         }
@@ -99,5 +97,25 @@ public class Enemy : MonoBehaviour
         val = 0.5f - val / 4;
         newColour = Color.HSVToRGB(hue, sat, val);
         GetComponent<Renderer>().material.SetColor("_EmissionColor", newColour);
+    }
+
+    void CheckIfDead()
+    {
+        if ((currBHP + currRHP + currYHP) <= 0)
+        {
+            GetComponent<ParticleSystem>().Play();
+            Rigidbody rb = GetComponent<Rigidbody>();
+            rb.velocity = Vector3.zero;
+            rb.freezeRotation = true;
+            GetComponent<MeshRenderer>().enabled = false;
+            GetComponent<BoxCollider>().enabled = false;
+            StartCoroutine(Die());
+        }
+    }
+
+    IEnumerator Die()
+    {
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
     }
 }

@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] float bulletLifeTime = 5f;
 
+
     Colours colour = Colours.Red;
 
     void Start() {
@@ -17,13 +18,16 @@ public class Bullet : MonoBehaviour
         this.colour = colour;
         GetComponent<Renderer>().material = material;
         
-        //change trail renderer colour to match bullet colour
         Color tempColor = material.color;
+
+        //change bullet particles colour
+        GetComponent<ParticleSystem>().startColor = tempColor;
+
+        //change trail renderer colour to match bullet colour
         tempColor.a = 1f;
         GetComponent<TrailRenderer>().startColor = tempColor;
         tempColor.a = 0f;
         GetComponent<TrailRenderer>().endColor = tempColor;
-
     }
 
     private void OnCollisionEnter(Collision other) {
@@ -35,7 +39,9 @@ public class Bullet : MonoBehaviour
         
         if (other.gameObject.tag != "Player")
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            StopMoving();
+            GetComponent<ParticleSystem>().Play();
         }
     }
 
@@ -43,5 +49,14 @@ public class Bullet : MonoBehaviour
     {
         yield return new WaitForSeconds(bulletLifeTime);
         Destroy(gameObject);
+    }
+
+    void StopMoving()
+    {
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        GetComponent<Rigidbody>().freezeRotation = true;
+        GetComponent<SphereCollider>().enabled = false;
+        GetComponent<MeshRenderer>().enabled = false;
+        GetComponent<TrailRenderer>().enabled = false;
     }
 }
