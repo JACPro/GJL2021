@@ -54,6 +54,8 @@ public class Enemy : MonoBehaviour
                 if (currYHP > 0)
                 {
                     currYHP--;
+                    ChangeColour();
+
                     //TODO subtract yellow from enemy colour
                 }
                 break;
@@ -61,6 +63,8 @@ public class Enemy : MonoBehaviour
                 if (currBHP > 0)
                 {
                     currBHP--;
+                    ChangeColour();
+
                     //TODO subtract blue from enemy colour
                 }
                 break;
@@ -77,7 +81,12 @@ public class Enemy : MonoBehaviour
 
         int currTotalHP = currRHP + currYHP + currBHP;
 
-        hue = ((currRHP * redHueVal) + (currYHP * (int)Colours.Yellow) + (currBHP * (int)Colours.Blue)) / (currTotalHP);
+        if (currTotalHP > 0) 
+        {
+            hue = ((currRHP * redHueVal) + (currYHP * (int)Colours.Yellow) + (currBHP * (int)Colours.Blue)) / (currTotalHP);
+            //hue range from 0 to 1 so must be fraction
+            hue /= 360;
+        }
 
         //change sat and val based on HP %
         sat = (float)currTotalHP / (float)maxTotalHP;
@@ -85,6 +94,10 @@ public class Enemy : MonoBehaviour
         print("hue: " + hue + " sat: " + sat + " val: " + val);
         Color newColour = Color.HSVToRGB(hue, sat, val);
         GetComponent<Renderer>().material.color = newColour;
+
+        //emission colour should be more subtle
+        val = 0.5f - val / 4;
+        newColour = Color.HSVToRGB(hue, sat, val);
         GetComponent<Renderer>().material.SetColor("_EmissionColor", newColour);
     }
 }

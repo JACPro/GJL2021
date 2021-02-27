@@ -1,1 +1,1 @@
-﻿public enum Colours { Blue = 225, Red = 0, Yellow = 60, Orange, Purple, Green };
+﻿public enum Colours { Blue = 200, Red = 0, Yellow = 60, Orange, Purple, Green };

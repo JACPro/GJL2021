@@ -32,7 +32,11 @@ public class Bullet : MonoBehaviour
             other.gameObject.GetComponent<Enemy>().TakeDamage(colour);
             //TODO inflict damage on enemy
         }
-        Destroy(gameObject);
+        
+        if (other.gameObject.tag != "Player")
+        {
+            Destroy(gameObject);
+        }
     }
 
     IEnumerator DestroySelf()
