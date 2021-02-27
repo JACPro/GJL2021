@@ -6,25 +6,25 @@ public class Shooting : MonoBehaviour
 {   
     [SerializeField] Transform bulletSpawn;
 
+    [SerializeField] float timeBetweenShots = 0.5f;
+
     //colour materials
     [SerializeField] Material blue;
     [SerializeField] Material red;
     [SerializeField] Material yellow;
 
     //bullet prefabs    
-    [SerializeField] GameObject blueBullet;
-    [SerializeField] GameObject redBullet;
-    [SerializeField] GameObject yellowBullet;
+    [SerializeField] GameObject bulletPrefab;
 
     [SerializeField] float bulletForce = 10f;
 
-    enum Colours {Blue, Red, Yellow};
-
     Colours currentColour = Colours.Red;
+
+    bool canFire = true;
 
     void Update()
     {
-        if(Input.GetButtonDown("Fire1"))
+        if(Input.GetButton("Fire1"))
         {
             Shoot();
         }
@@ -37,21 +37,19 @@ public class Shooting : MonoBehaviour
 
     void Shoot()
     {
-        GameObject bullet = new GameObject();
-        switch (currentColour)
+        if (canFire)
         {
-            case Colours.Blue:
-                bullet = Instantiate(blueBullet, bulletSpawn.position, bulletSpawn.rotation);
-                break;
-            case Colours.Red:
-                bullet = Instantiate(redBullet, bulletSpawn.position, bulletSpawn.rotation);
-                break;
-            case Colours.Yellow:
-                bullet = Instantiate(yellowBullet, bulletSpawn.position, bulletSpawn.rotation);
-                break;
+            GameObject bullet;
+            bullet = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
+            bullet.GetComponent<Bullet>().SetColourAndMaterial(currentColour, GetComponent<Renderer>().material);
+
+            Rigidbody rb = bullet.GetComponent<Rigidbody>();
+            rb.AddForce(bulletSpawn.forward * bulletForce, ForceMode.Impulse);
+
+            canFire = false;
+            StartCoroutine(WaitToFire());
         }
-        Rigidbody rb = bullet.GetComponent<Rigidbody>();
-        rb.AddForce(bulletSpawn.forward * bulletForce, ForceMode.Impulse);
+
     }    
 
     void ChangeBulletColour()
@@ -74,5 +72,11 @@ public class Shooting : MonoBehaviour
                 transform.GetChild(0).GetComponent<Renderer>().material = blue;
                 break;            
         }
+    }
+
+    IEnumerator WaitToFire()
+    {
+        yield return new WaitForSeconds(timeBetweenShots);
+        canFire = true;
     }
 }
