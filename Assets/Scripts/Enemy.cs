@@ -122,12 +122,12 @@ public class Enemy : MonoBehaviour
 
         //change sat and val based on HP %
         sat = (float)currTotalHP / (float)maxTotalHP;
-        val = 0.5f + ((float)currTotalHP / (float)maxTotalHP) / 2;
+        val = ((float)currTotalHP / (float)maxTotalHP) / 2;
         Color newColour = Color.HSVToRGB(hue, sat, val);
         GetComponent<Renderer>().material.color = newColour;
 
         //emission colour should be more subtle
-        val = 0.5f - val / 4;
+        val = 0.7f - val / 4;
         newColour = Color.HSVToRGB(hue, sat, val);
         GetComponent<Renderer>().material.SetColor("_EmissionColor", newColour);
     }
@@ -167,8 +167,10 @@ public class Enemy : MonoBehaviour
         //turn saturation and value down to half each to give effect of turned off light
         Color.RGBToHSV(hpCol, out hue, out sat, out val);
         hpCol = Color.HSVToRGB(hue, 0.1f, val);
-        hpCol.a = 0.1f;
+        hpCol.a = 0.5f;
         hpBar.GetComponent<Renderer>().material.color = hpCol;
+
+        Destroy(hpBar.transform.GetChild(0).gameObject);
 
         //stop emission by turning emission colour to black
         hpBar.GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.black);
