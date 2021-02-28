@@ -46,6 +46,9 @@ public class Shooting : MonoBehaviour
             Rigidbody rb = bullet.GetComponent<Rigidbody>();
             rb.AddForce(bulletSpawn.forward * bulletForce, ForceMode.Impulse);
 
+            //trigger muzzle flash
+            bulletSpawn.gameObject.GetComponent<ParticleSystem>().Play();
+
             canFire = false;
             StartCoroutine(WaitToFire());
         }
