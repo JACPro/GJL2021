@@ -49,7 +49,6 @@ public class Enemy : MonoBehaviour
             SetHPBarOff(yellowHPbar);
         }
         blueHPbar = transform.GetChild(2).gameObject;
-        print(blueHPbar.name);
         if (currBHP <= 0)
         {
             SetHPBarOff(blueHPbar);
@@ -148,6 +147,7 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Die()
     {
+        GetComponent<AudioSource>().Play(0);
         foreach (Transform child in transform)
         {
             Destroy(child.gameObject);

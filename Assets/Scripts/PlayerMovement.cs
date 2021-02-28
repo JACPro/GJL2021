@@ -5,12 +5,13 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 5f;
-
     [SerializeField] Rigidbody rb;
 
     [SerializeField] Camera cam;
-
     [SerializeField] Texture2D crosshair;
+
+    [SerializeField] float timeBetweenSteps = 0.5f;
+    bool canPlaySound = true;
 
     Vector3 movement;
     Vector3 mousePos;
@@ -26,6 +27,15 @@ public class PlayerMovement : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.z = Input.GetAxisRaw("Vertical");
 
+        //stop footsteps audio when not moving
+        if (movement != Vector3.zero && canPlaySound)
+        {
+            GetComponent<AudioSource>().Play();
+            canPlaySound = false;
+            StartCoroutine(WaitToStep());
+        }
+
+
         //handle player rotation to face mouse
         mousePos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10f));        
     }
@@ -38,5 +48,12 @@ public class PlayerMovement : MonoBehaviour
         float angle = Mathf.Atan2(playerRotation.z, playerRotation.x) * Mathf.Rad2Deg - 90f;
 
         transform.rotation = Quaternion.AngleAxis(-angle, Vector3.up);
+    }
+
+    IEnumerator WaitToStep()
+    {
+        yield return new WaitForSeconds(timeBetweenSteps);
+        canPlaySound = true;
+
     }
 }

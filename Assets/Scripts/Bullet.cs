@@ -6,7 +6,6 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] float bulletLifeTime = 5f;
 
-
     Colours colour = Colours.Red;
 
     void Start() {
