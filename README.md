@@ -40,7 +40,7 @@ You must visit each Wizard in turn to be gifted with a different power. Only onc
 
 #### Sound
 * SFX (footsteps, firing bullets, (TODO - player damaged, player death, enemy damaged, enemy death, boss damaged, boss death))
-* TODO - Add Music (using singleton pattern to persist between scenes)
+* Added Music (using singleton pattern to persist between scenes)
 * TODO - Separate volume control (SFX, music, master)
 
 #### Polish/Effects
