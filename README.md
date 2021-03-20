@@ -1,11 +1,12 @@
-# GJL2021
+<img src="https://jacpro.github.io/images/splashmenu.png" title="Splash Main Menu"></img>
 
 ## Introduction
 This top-down 2.5D shooter started as a project for the [*Game Jobs Live 2021 Game Jam*](https://itch.io/jam/gjl-game-parade). When the submission deadline arrived, I had already programmed the core functionality of the game, but wasn't happy with the final result; there was a lot more I wanted to add to it. As such, I decided to turn it into a longer term project to span a couple of months.
 
 
-//TODO Add Images Here
-
+<img src="https://jacpro.github.io/images/splash1.png" title="Splash (Work in Progress)" width="33%"></img>
+<img src="https://jacpro.github.io/images/splash2.png" title="Change colour to match enemies" width="33%"></img>
+<img src="https://jacpro.github.io/images/splash3.png" title="Enemy death colour splash" width="33%"></img>
 
 ___
 #### To play the game in your browser, [*click here*]()
@@ -34,9 +35,9 @@ You must visit each Wizard in turn to be gifted with a different power. Only onc
 * TODO - Add colour blindness options
 
 #### Menus
-* TODO - Add main menu
-* TODO - Add pause menu
-* TODO - Add settings menu
+* Main Menu
+* TODO - Add Pause Menu
+* TODO - Add Settings Menu
 
 #### Sound
 * SFX (footsteps, firing bullets, (TODO - player damaged, player death, enemy damaged, enemy death, boss damaged, boss death))
