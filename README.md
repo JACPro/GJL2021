@@ -9,7 +9,7 @@ This top-down 2.5D shooter started as a project for the [*Game Jobs Live 2021 Ga
 <img src="https://jacpro.github.io/images/splash3.png" title="Enemy death colour splash" width="33%"></img>
 
 ___
-#### To play the game in your browser, [*click here*]()
+#### ~~To play the game in your browser, *click here*~~
 ___
 
 ## Story
