@@ -1,7 +1,7 @@
 <img src="https://jacpro.github.io/images/splashmenu.png" title="Splash Main Menu"></img>
 
 ## Introduction
-This top-down 2.5D shooter started as a project for the [*Game Jobs Live 2021 Game Jam*](https://itch.io/jam/gjl-game-parade).
+Splashed is a top-down 2.5D shooter created for the [*Game Jobs Live 2021 Game Jam*](https://itch.io/jam/gjl-game-parade).
 
 
 <img src="https://jacpro.github.io/images/splash1.png" title="Splash (Work in Progress)" width="33%"></img>
